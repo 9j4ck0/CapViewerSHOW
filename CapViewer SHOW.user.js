@@ -4,6 +4,10 @@
 // @version      0.1.0
 // @description  Gestione user friendly della web app CapViewer
 // @author       9j3thr0
+// @match        https://capviewer.vigilfuoco.it/cap-viewer-web/repo/*
+// @match        https://capviewer.vigilfuoco.it/cap-viewer-web/repo
+// @match        https://capviewer.vigilfuoco.it/cap-viewer-web/send/*
+// @match        https://capviewer.vigilfuoco.it/cap-viewer-web/send
 // @match        https://capviewer.vigilfuoco.it/cap-viewer-web/alerts/*
 // @match        https://capviewer.vigilfuoco.it/cap-viewer-web/alerts
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
@@ -71,7 +75,7 @@
         else {
             b = document.createElement('button');
             b.setAttribute('id', v.id);
-            console.log(v.children[0].getAttribute('href'));
+            //console.log(v.children[0].getAttribute('href'));
             b.onclick = function(){
                 location.href = v.children[0].getAttribute('href');
                 return false;
@@ -146,49 +150,78 @@
         document.querySelector(".col-lg-8").style.paddingRight = '0.5em';
     }
     document.getElementById('tipoCodifica_chosen').style.width = '';
-    document.getElementById('event_chosen').style.width = '';
     document.getElementById('senders_chosen').style.width = '';
     document.getElementById('inc_prog_chosen').style.width = '';
     document.getElementById('rilevanza_chosen').style.width = '';
     document.getElementById('filtroIntervento_chosen').style.width = '';
-    document.querySelector(".col-lg-4").style.paddingRight = '0em';
-    document.querySelector("div.left-column").style.margin = '0.3em 0em';
     var numberFilter = document.createElement('div');
     numberFilter.setAttribute('class', 'col-md-3 form-title');
+    numberFilter.style.padding = '0em';
     numberFilter.innerText = 'Dati Filtrati: ' + document.querySelector('.list-results-header>b').innerText;
     var detail = document.createElement('div');
     detail.setAttribute('class', 'col-md-8');
-    detail.innerText = 'Dal: ' + document.querySelector('#filtraDal').value;
+    detail.innerHTML = 'Dal: <b>' + document.querySelector('#filtraDal').value + '</b>';
     if(document.querySelector('#filtraAl').value != '') {
-        detail.innerText = detail.innerText + ' Al: ' + document.querySelector('#filtraAl').value;
+        detail.innerHTML = detail.innerHTML + ' al: <b>' + document.querySelector('#filtraAl').value + '</b>';
     }
     if(document.querySelector('#numero').value != '') {
-        detail.innerText = detail.innerText + ' Numero: ' + document.querySelector('#numero').value;
+        detail.innerText = detail.innerHTML + ' Num: <b>' + document.querySelector('#numero').value + '</b>';
     }
     var buttonDIV = document.createElement('div');
     buttonDIV.setAttribute('class', 'col-md-1');
     var button = document.createElement('button');
+    button.setAttribute('id', 'buttonCollapseForm');
     button.style.border = '0px';
     button.backgroundColor = 'transparent';
-    var svgItem = document.createElement('svg');
-    svgItem.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svgItem.setAttribute('width', '16');
-    svgItem.setAttribute('height', '16');
-    svgItem.setAttribute('fill', 'currentColor');
-    svgItem.setAttribute('class', 'bi bi-caret-down');
-    svgItem.setAttribute('viewBox', '0 0 16 16');
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    svg.setAttribute('d', 'M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z');
-    svgItem.appendChild(svg);
-    button.appendChild(svgItem);
-    // button.innerText = 'OPEN';
+    const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    iconSvg.setAttribute('width', '16');
+    iconSvg.setAttribute('height', '16');
+    iconSvg.setAttribute('fill', 'currentColor');
+    iconSvg.setAttribute('class', 'bi bi-caret-down');
+    iconSvg.setAttribute('viewBox', '0 0 16 16');
+    iconPath.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
+    iconPath.setAttribute('id', 'arrowForm');
+    iconSvg.appendChild(iconPath);
+    button.appendChild(iconSvg);
+    button.addEventListener('click', function(event) {
+        var attr = document.querySelector('#arrowForm');
+        //console.log(attr);
+        if(attr.getAttribute('d') == 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z') {
+            attr.setAttribute('d', 'M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z');
+            document.querySelector('#filterBar').style.borderBottom = '0px solid lightgrey';
+            document.querySelector('#search').hidden = false;
+        }
+        else {
+            attr.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
+            document.querySelector('#filterBar').style.borderBottom = '1px solid lightgrey';
+            document.querySelector('#search').hidden = true;
+        }
+    })
     buttonDIV.appendChild(button);
     var filterHidden = document.createElement('div');
     filterHidden.setAttribute('id', 'filterBar');
+    filterHidden.style.height = '2em';
+    filterHidden.style.borderBottom = '1px solid lightgrey';
     filterHidden.appendChild(numberFilter);
     filterHidden.appendChild(detail);
     filterHidden.appendChild(buttonDIV);
-    document.querySelector("div.left-column").insertBefore(filterHidden, document.querySelector("div.left-column").firstChild);
+    var showMap = document.getElementById('event_chosen');
+    if(showMap != null) {
+        showMap.style.width = '';
+        document.querySelector(".col-lg-4").style.paddingRight = '0em';
+        document.querySelector("div.left-column").style.margin = '0.3em 0em';
+        document.querySelector("div.left-column").insertBefore(filterHidden, document.querySelector("div.left-column").firstChild);
+    }
+    else {
+        document.getElementById('events_chosen').style.width = '';
+        document.querySelector(".container").style.marginTop = '2em';
+        document.querySelector("div.container>div.row").insertBefore(filterHidden, document.querySelector("div.container>div.row").firstChild);
+    }
     document.querySelector('.list-results-header').remove();
+    document.querySelector('#search>.form-title').remove();
+    document.querySelector('#search').hidden = true;
+    document.querySelector('div.list-results').style.height = '88vh';
+    document.querySelector('.list-group').style.marginBottom = '0em';
     console.log('CAPVIEWER_tool...ok! developer by 9J3thr0');
 })();
