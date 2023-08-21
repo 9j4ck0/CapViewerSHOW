@@ -149,79 +149,128 @@
         e.style.marginTop = '0.5em';
         document.querySelector(".col-lg-8").style.paddingRight = '0.5em';
     }
-    document.getElementById('tipoCodifica_chosen').style.width = '';
-    document.getElementById('senders_chosen').style.width = '';
-    document.getElementById('inc_prog_chosen').style.width = '';
-    document.getElementById('rilevanza_chosen').style.width = '';
-    document.getElementById('filtroIntervento_chosen').style.width = '';
-    var numberFilter = document.createElement('div');
-    numberFilter.setAttribute('class', 'col-md-3 form-title');
-    numberFilter.style.padding = '0em';
-    numberFilter.innerText = 'Dati Filtrati: ' + document.querySelector('.list-results-header>b').innerText;
-    var detail = document.createElement('div');
-    detail.setAttribute('class', 'col-md-8');
-    detail.innerHTML = 'Dal: <b>' + document.querySelector('#filtraDal').value + '</b>';
-    if(document.querySelector('#filtraAl').value != '') {
-        detail.innerHTML = detail.innerHTML + ' al: <b>' + document.querySelector('#filtraAl').value + '</b>';
+//     se non esiste significa che sono su archivio
+    if(document.getElementById('tipoCodifica_chosen') != undefined) {
+        document.getElementById('tipoCodifica_chosen').style.width = '';
+        document.getElementById('inc_prog_chosen').style.width = '';
+        document.getElementById('rilevanza_chosen').style.width = '';
+        document.getElementById('filtroIntervento_chosen').style.width = '';
     }
-    if(document.querySelector('#numero').value != '') {
-        detail.innerText = detail.innerHTML + ' Num: <b>' + document.querySelector('#numero').value + '</b>';
-    }
-    var buttonDIV = document.createElement('div');
-    buttonDIV.setAttribute('class', 'col-md-1');
-    var button = document.createElement('button');
-    button.setAttribute('id', 'buttonCollapseForm');
-    button.style.border = '0px';
-    button.backgroundColor = 'transparent';
-    const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    iconSvg.setAttribute('width', '16');
-    iconSvg.setAttribute('height', '16');
-    iconSvg.setAttribute('fill', 'currentColor');
-    iconSvg.setAttribute('class', 'bi bi-caret-down');
-    iconSvg.setAttribute('viewBox', '0 0 16 16');
-    iconPath.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
-    iconPath.setAttribute('id', 'arrowForm');
-    iconSvg.appendChild(iconPath);
-    button.appendChild(iconSvg);
-    button.addEventListener('click', function(event) {
-        var attr = document.querySelector('#arrowForm');
-        //console.log(attr);
-        if(attr.getAttribute('d') == 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z') {
-            attr.setAttribute('d', 'M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z');
-            document.querySelector('#filterBar').style.borderBottom = '0px solid lightgrey';
-            document.querySelector('#search').hidden = false;
-        }
-        else {
-            attr.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
-            document.querySelector('#filterBar').style.borderBottom = '1px solid lightgrey';
-            document.querySelector('#search').hidden = true;
-        }
-    })
-    buttonDIV.appendChild(button);
-    var filterHidden = document.createElement('div');
-    filterHidden.setAttribute('id', 'filterBar');
-    filterHidden.style.height = '2em';
-    filterHidden.style.borderBottom = '1px solid lightgrey';
-    filterHidden.appendChild(numberFilter);
-    filterHidden.appendChild(detail);
-    filterHidden.appendChild(buttonDIV);
-    var showMap = document.getElementById('event_chosen');
-    if(showMap != null) {
-        showMap.style.width = '';
-        document.querySelector(".col-lg-4").style.paddingRight = '0em';
-        document.querySelector("div.left-column").style.margin = '0.3em 0em';
-        document.querySelector("div.left-column").insertBefore(filterHidden, document.querySelector("div.left-column").firstChild);
+    //se non esiste è perchè sono nella sezione nuovo messaggio
+    if(document.getElementById('senders_chosen') == undefined) {
+        document.querySelector('h5').style.marginBottom = '0em';
+        document.querySelectorAll(".col-md-6").forEach((d, ind) => {
+            if(ind != 0) {
+                d.style.paddingLeft = '0em';
+                d.style.paddingRight = '1em';
+                d.style.paddingTop = '0.5em';
+                if(ind > 10) {
+                    d.style.paddingRight = '0em';
+                }
+            }
+        });
+        document.querySelectorAll(".col-md-4").forEach(d => {
+            d.style.paddingLeft = '0em';
+            d.style.paddingRight = '1em';
+            d.style.paddingTop = '0.5em';
+        });
+        document.querySelectorAll(".col-md-3").forEach((d, ind) => {
+            if(ind != 0) {
+                d.style.paddingLeft = '0em';
+                d.style.paddingRight = '1em';
+                d.style.paddingTop = '0.5em';
+            }
+        });
+        document.querySelectorAll(".col-md-12").forEach(d => {
+            d.style.paddingLeft = '0em';
+            d.style.paddingRight = '1em';
+            d.style.paddingTop = '0.5em';
+        });
+        document.getElementById('status_chosen').style.width = '';
+        document.getElementById('rilevante_chosen').style.width = '';
+        document.getElementById('incProgress_chosen').style.width = '';
+        document.getElementById('eventL1_chosen').style.width = '';
+        document.getElementById('map_search').style.height = '27.6rem';
     }
     else {
-        document.getElementById('events_chosen').style.width = '';
-        document.querySelector(".container").style.marginTop = '2em';
-        document.querySelector("div.container>div.row").insertBefore(filterHidden, document.querySelector("div.container>div.row").firstChild);
+        document.getElementById('senders_chosen').style.width = '';
+        var numberFilter = document.createElement('div');
+        numberFilter.setAttribute('class', 'col-md-3 form-title');
+        numberFilter.style.padding = '0em';
+        numberFilter.innerText = 'Dati Filtrati: ' + document.querySelector('.list-results-header>b').innerText;
+        var detail = document.createElement('div');
+        detail.setAttribute('class', 'col-md-8');
+        detail.innerHTML = 'Dal: <b>' + document.querySelector('#filtraDal').value + '</b>';
+        if(document.querySelector('#filtraAl').value != '') {
+            detail.innerHTML = detail.innerHTML + ' al: <b>' + document.querySelector('#filtraAl').value + '</b>';
+        }
+        if(document.querySelector('#numero').value != '') {
+            detail.innerText = detail.innerHTML + ' Num: <b>' + document.querySelector('#numero').value + '</b>';
+        }
+        var buttonDIV = document.createElement('div');
+        buttonDIV.setAttribute('class', 'col-md-1');
+        var button = document.createElement('button');
+        button.setAttribute('id', 'buttonCollapseForm');
+        button.style.border = '0px';
+        button.backgroundColor = 'transparent';
+        const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        iconSvg.setAttribute('width', '16');
+        iconSvg.setAttribute('height', '16');
+        iconSvg.setAttribute('fill', 'currentColor');
+        iconSvg.setAttribute('class', 'bi bi-caret-down');
+        iconSvg.setAttribute('viewBox', '0 0 16 16');
+        iconPath.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
+        iconPath.setAttribute('id', 'arrowForm');
+        iconSvg.appendChild(iconPath);
+        button.appendChild(iconSvg);
+        button.addEventListener('click', function(event) {
+            var attr = document.querySelector('#arrowForm');
+            //console.log(attr);
+            if(attr.getAttribute('d') == 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z') {
+                attr.setAttribute('d', 'M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z');
+                document.querySelector('#filterBar').style.borderBottom = '0px solid lightgrey';
+                document.querySelector('#search').hidden = false;
+            }
+            else {
+                attr.setAttribute('d', 'M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z');
+                document.querySelector('#filterBar').style.borderBottom = '1px solid lightgrey';
+                document.querySelector('#search').hidden = true;
+            }
+        })
+        buttonDIV.appendChild(button);
+        var filterHidden = document.createElement('div');
+        filterHidden.setAttribute('id', 'filterBar');
+        filterHidden.style.height = '2em';
+        filterHidden.style.borderBottom = '1px solid lightgrey';
+        filterHidden.appendChild(numberFilter);
+        filterHidden.appendChild(detail);
+        filterHidden.appendChild(buttonDIV);
+        var showMap = document.getElementById('event_chosen');
+        if(showMap != null) {
+            showMap.style.width = '';
+            document.querySelector(".col-lg-4").style.paddingRight = '0em';
+            document.querySelector("div.left-column").style.margin = '0.3em 0em';
+            document.querySelector("div.left-column").insertBefore(filterHidden, document.querySelector("div.left-column").firstChild);
+        }
+        else {
+            document.getElementById('events_chosen').style.width = '';
+            if(document.querySelector(".container") != undefined) {
+                document.querySelector(".container").style.marginTop = '2em';
+                document.querySelector("div.container>div.row").insertBefore(filterHidden, document.querySelector("div.container>div.row").firstChild);
+            }
+            // questo serve per l'archivio che non ha gli stessi nomi che la pagina principale e quindi esce dal selettore event_chosen
+            else {
+                document.querySelector(".col-lg-4").style.paddingRight = '0em';
+                document.querySelector("div.left-column").style.margin = '0.3em 0em';
+                document.querySelector("div.left-column").insertBefore(filterHidden, document.querySelector("div.left-column").firstChild);
+            }
+        }
+        document.querySelector('.list-results-header').remove();
+        document.querySelector('#search>.form-title').remove();
+        document.querySelector('#search').hidden = true;
+        document.querySelector('div.list-results').style.height = '88vh';
+        document.querySelector('.list-group').style.marginBottom = '0em';
     }
-    document.querySelector('.list-results-header').remove();
-    document.querySelector('#search>.form-title').remove();
-    document.querySelector('#search').hidden = true;
-    document.querySelector('div.list-results').style.height = '88vh';
-    document.querySelector('.list-group').style.marginBottom = '0em';
     console.log('CAPVIEWER_tool...ok! developer by 9J3thr0');
 })();
